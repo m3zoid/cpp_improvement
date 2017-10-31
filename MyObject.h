@@ -12,7 +12,7 @@ public:
 	void sayname();
 
 private:
-	void debug_str(std::string);
+	void debug_str(const std::string);
 
 private:
 	int m_i_name;

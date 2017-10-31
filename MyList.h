@@ -1,5 +1,5 @@
-#ifndef __MYLIST_H_INCLUDED_
-#define __MYLIST_H_INCLUDED_
+#ifndef __MYLIST_HPP_CUSTOMONE_INCLUDED_
+#define __MYLIST_HPP_CUSTOMONE_INCLUDED_
 
 #include "IncludeAll.h"
 
@@ -10,21 +10,23 @@ public:
 	MyList();
 	~MyList();
 
-	bool empty() const noexcept;
-	std::size_t size() const noexcept;
+	bool empty() const;
+	std::size_t size() const;
 
-	void push_back(const T& val);
+	void push_back(const T&);
 	void pop_back();
 
-	void clear() noexcept;
+	void clear();
 
-	void reverse() noexcept;
+	void reverse();
 
 	void reveal() const;
 
 private:
 	void initializer();
 	void clear_all();
+
+	void debug_str(const std::string);
 
 private:
 	struct Element
@@ -47,43 +49,25 @@ MyList<T>::MyList()
 	// , member2()
 {
 	initializer();
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << "MyList" << " <- Constructor\n";
-#endif
+	debug_str(std::string("_ <- (MyList: standart) Constructor"));
 }
-
-// #ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-// debug(string)
-// {
-//  std::cout << string
-// }
-// #else
-// inline
-// debug(string)
-// {
-// }
-// #endif
 
 template <class T>
 MyList<T>::~MyList()
 {
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << "MyList" << " <- Start destructor\n";
-#endif
+	debug_str(std::string("_ <- (MyList) Destructor start"));
 	clear_all();
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << "MyList" << " <- Destroyed\n";
-#endif
+	debug_str(std::string("_ <- (MyList) Destructor end"));
 }
 
 template <class T>
-bool MyList<T>::empty() const noexcept
+bool MyList<T>::empty() const
 {
 	return (sz == 0);
 }
 
 template <class T>
-std::size_t MyList<T>::size() const noexcept
+std::size_t MyList<T>::size() const
 {
 	return sz;
 }
@@ -109,9 +93,7 @@ void MyList<T>::push_back(const T& val)
 		last = buffElem;
 	}
 	++sz;
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << sz << " <- MyList Pushing back to\n";
-#endif
+	debug_str(std::to_string(sz) + " <- (MyList) Pushing back to");
 }
 
 template <class T>
@@ -136,9 +118,7 @@ void MyList<T>::pop_back()
 	{
 		throw std::runtime_error("Undefined behavior with MyList pop_back()");
 	}
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << sz << " <- MyList Poping back to\n";
-#endif
+	debug_str(std::to_string(sz) + " <- (MyList) Poping back to");
 }
 
 template <class T>
@@ -164,37 +144,31 @@ void MyList<T>::clear_all()
 template <class T>
 void MyList<T>::reveal() const
 {
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << "MyList" << " <- Revealing start direct\n";
-#endif
+	debug_str(std::string("_ <- (MyList) Revealing start direct"));
 	Element* current = first;
 	while (current)
 	{
 		current->data.sayname();
 		current = current->next;
 	}
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << "MyList" << " <- Revealing start reverse\n";
-#endif
+	debug_str(std::string("_ <- (MyList) Revealing start reverse"));
 	current = last;
 	while (current)
 	{
 		current->data.sayname();
 		current = current->previous;
 	}
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << "MyList" << " <- Revealing completed\n";
-#endif
+	debug_str(std::string("_ <- (MyList) Revealing completed"));
 }
 
 template <class T>
-void MyList<T>::clear() noexcept
+void MyList<T>::clear()
 {
 	clear_all();
 }
 
 template <class T>
-void MyList<T>::reverse() noexcept
+void MyList<T>::reverse()
 {
 	Element* aux_curr = first;
 	Element* aux_next = NULL;
@@ -210,9 +184,22 @@ void MyList<T>::reverse() noexcept
 	}
 	last = first;
 	first = aux_prev;
-#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-	std::cout << "MyList" << " <- Reverse completed\n";
-#endif
+	debug_str(std::string("_ <- (MyList) Reverse completed"));
 }
 
-#endif // __MYLIST_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
+template <class T>
+void MyList<T>::debug_str(const std::string outString)
+{
+	std::cout << outString << "\n";
+}
+#else
+inline
+template <class T>
+void MyList<T>::debug_str(const std::string outString)
+{
+	// empty
+}
+#endif
+
+#endif // __MYLIST_HPP_CUSTOMONE_INCLUDED_

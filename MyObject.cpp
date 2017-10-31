@@ -23,13 +23,13 @@ void MyObject::sayname()
 }
 
 #ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-void MyObject::debug_str(std::string outString)
+void MyObject::debug_str(const std::string outString)
 {
 	std::cout << outString << "\n";
 }
 #else
 inline
-void MyObject::debug_str(std::string outString)
+void MyObject::debug_str(const std::string outString)
 {
 	// empty
 }
