@@ -12,10 +12,10 @@ public:
 	void sayname();
 
 private:
-	void debug_str(const std::string);
+	void debug_str(const std::string) const;
 
 private:
-	int m_i_name;
+	int m_iName;
 };
 
 #endif // __MYOBJECT_H_CUSTOMONE_INCLUDED_

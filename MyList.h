@@ -3,7 +3,7 @@
 
 #include "IncludeAll.h"
 
-template <class T>
+template <class TObjTemplate>
 class MyList
 {
 public:
@@ -13,7 +13,7 @@ public:
 	bool empty() const;
 	std::size_t size() const;
 
-	void push_back(const T&);
+	void push_back(const TObjTemplate&);
 	void pop_back();
 
 	void clear();
@@ -26,24 +26,24 @@ private:
 	void initializer();
 	void clear_all();
 
-	void debug_str(const std::string);
+	void debug_str(const std::string) const;
 
 private:
-	struct Element
+	struct Node
 	{
-		Element* previous;
-		Element* next;
-		T data;
+		Node* m_pPrev;
+		Node* m_pNext;
+		TObjTemplate m_storedData;
 	};
 
 private:
-	std::size_t sz;
-	Element* first;
-	Element* last;
+	std::size_t m_iCurrentSize;
+	Node* m_pHead;
+	Node* m_pTail;
 };
 
-template <class T>
-MyList<T>::MyList()
+template <class TObjTemplate>
+MyList<TObjTemplate>::MyList()
 	// : inherited_class(arg1,arg2)
 	// , member1(0)
 	// , member2()
@@ -52,151 +52,151 @@ MyList<T>::MyList()
 	debug_str(std::string("_ <- (MyList: standart) Constructor"));
 }
 
-template <class T>
-MyList<T>::~MyList()
+template <class TObjTemplate>
+MyList<TObjTemplate>::~MyList()
 {
 	debug_str(std::string("_ <- (MyList) Destructor start"));
 	clear_all();
 	debug_str(std::string("_ <- (MyList) Destructor end"));
 }
 
-template <class T>
-bool MyList<T>::empty() const
+template <class TObjTemplate>
+bool MyList<TObjTemplate>::empty() const
 {
-	return (sz == 0);
+	return (m_iCurrentSize == 0);
 }
 
-template <class T>
-std::size_t MyList<T>::size() const
+template <class TObjTemplate>
+std::size_t MyList<TObjTemplate>::size() const
 {
-	return sz;
+	return m_iCurrentSize;
 }
 
-template <class T>
-void MyList<T>::push_back(const T& val)
+template <class TObjTemplate>
+void MyList<TObjTemplate>::push_back(const TObjTemplate& val)
 {
-	// std::unique< Element > pElement(new Element);
-	Element* buffElem = new Element;
-	buffElem->previous = NULL;
-	buffElem->next = NULL;
-	buffElem->data = val;
+	// std::unique< Node > pNode(new Node);
+	Node* pAuxCurr = new Node;
+	pAuxCurr->m_pPrev = NULL;
+	pAuxCurr->m_pNext = NULL;
+	pAuxCurr->m_storedData = val;
 
-	if (sz > 0)
+	if (m_iCurrentSize > 0)
 	{
-		buffElem->previous = last;
-		last->next = buffElem;
-		last = buffElem;
+		pAuxCurr->m_pPrev = m_pTail;
+		m_pTail->m_pNext = pAuxCurr;
+		m_pTail = pAuxCurr;
 	}
 	else
 	{
-		first = buffElem;
-		last = buffElem;
+		m_pHead = pAuxCurr;
+		m_pTail = pAuxCurr;
 	}
-	++sz;
-	debug_str(std::to_string(sz) + " <- (MyList) Pushing back to");
+	++m_iCurrentSize;
+	debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Pushing back to");
 }
 
-template <class T>
-void MyList<T>::pop_back()
+template <class TObjTemplate>
+void MyList<TObjTemplate>::pop_back()
 {
-	if (last)
+	if (m_pTail)
 	{
-		if (first == last)
+		if (m_pHead == m_pTail)
 		{
-			delete last;
-			first = last = NULL;
+			delete m_pTail;
+			m_pHead = m_pTail = NULL;
 		}
 		else
 		{
-			last = last->previous;
-			delete last->next;
-			last->next = NULL;
+			m_pTail = m_pTail->m_pPrev;
+			delete m_pTail->m_pNext;
+			m_pTail->m_pNext = NULL;
 		}
-		--sz;
+		--m_iCurrentSize;
 	}
 	else
 	{
-		throw std::runtime_error("Undefined behavior with MyList pop_back()");
+		throw std::runtime_error("Undefined behavior in MyList pop_back() function");
 	}
-	debug_str(std::to_string(sz) + " <- (MyList) Poping back to");
+	debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Poping back to new size");
 }
 
-template <class T>
-void MyList<T>::initializer()
+template <class TObjTemplate>
+void MyList<TObjTemplate>::initializer()
 {
-	sz = 0;
-	first = last = NULL;
+	m_iCurrentSize = 0;
+	m_pHead = m_pTail = NULL;
 }
 
-template <class T>
-void MyList<T>::clear_all()
+template <class TObjTemplate>
+void MyList<TObjTemplate>::clear_all()
 {
-	Element* current;
-	while (first)
+	Node* pAuxCurr;
+	while (m_pHead)
 	{
-		current = first;
-		first = current->next;
-		delete current;
+		pAuxCurr = m_pHead;
+		m_pHead = pAuxCurr->m_pNext;
+		delete pAuxCurr;
 	}
 	initializer();
 }
 
-template <class T>
-void MyList<T>::reveal() const
+template <class TObjTemplate>
+void MyList<TObjTemplate>::reveal() const
 {
 	debug_str(std::string("_ <- (MyList) Revealing start direct"));
-	Element* current = first;
-	while (current)
+	Node* pAuxCurr = m_pHead;
+	while (pAuxCurr)
 	{
-		current->data.sayname();
-		current = current->next;
+		pAuxCurr->m_storedData.sayname();
+		pAuxCurr = pAuxCurr->m_pNext;
 	}
 	debug_str(std::string("_ <- (MyList) Revealing start reverse"));
-	current = last;
-	while (current)
+	pAuxCurr = m_pTail;
+	while (pAuxCurr)
 	{
-		current->data.sayname();
-		current = current->previous;
+		pAuxCurr->m_storedData.sayname();
+		pAuxCurr = pAuxCurr->m_pPrev;
 	}
 	debug_str(std::string("_ <- (MyList) Revealing completed"));
 }
 
-template <class T>
-void MyList<T>::clear()
+template <class TObjTemplate>
+void MyList<TObjTemplate>::clear()
 {
 	clear_all();
 }
 
-template <class T>
-void MyList<T>::reverse()
+template <class TObjTemplate>
+void MyList<TObjTemplate>::reverse()
 {
-	Element* aux_curr = first;
-	Element* aux_next = NULL;
-	Element* aux_prev = NULL;
+	Node* pAuxCurr = m_pHead;
+	Node* pAuxNext = NULL;
+	Node* pAuxPrev = NULL;
 
-	while (aux_curr != NULL)
+	while (pAuxCurr != NULL)
 	{
-		aux_next = aux_curr->next;
-		aux_curr->next = aux_prev;
-		aux_curr->previous = aux_next;
-		aux_prev = aux_curr;
-		aux_curr = aux_next;
+		pAuxNext = pAuxCurr->m_pNext;
+		pAuxCurr->m_pNext = pAuxPrev;
+		pAuxCurr->m_pPrev = pAuxNext;
+		pAuxPrev = pAuxCurr;
+		pAuxCurr = pAuxNext;
 	}
-	last = first;
-	first = aux_prev;
+	m_pTail = m_pHead;
+	m_pHead = pAuxPrev;
 	debug_str(std::string("_ <- (MyList) Reverse completed"));
 }
 
 #ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-template <class T>
-void MyList<T>::debug_str(const std::string outString)
+template <class TObjTemplate>
+void MyList<TObjTemplate>::debug_str(const std::string sOutStr) const
 {
-	std::cout << outString << "\n";
+	std::cout << sOutStr << "\n";
 }
 #else
 inline
-template <class T>
-void MyList<T>::debug_str(const std::string outString)
+template <class TObjTemplate>
+void MyList<TObjTemplate>::debug_str(const std::string sOutStr) const
 {
 	// empty
 }
