@@ -23,10 +23,9 @@ public:
 	void reveal() const;
 
 private:
-	void initializer();
-	void clear_all();
-
-	void debug_str(const std::string) const;
+	void _initializer();
+	void _clear_all();
+	void _debug_str(const std::string) const;
 
 private:
 	struct Node
@@ -44,20 +43,19 @@ private:
 
 template <class TObjTemplate>
 MyList<TObjTemplate>::MyList()
-	// : inherited_class(arg1,arg2)
-	// , member1(0)
-	// , member2()
+	: m_iCurrentSize(0)
+	, m_pHead(NULL)
+	, m_pTail(NULL)
 {
-	initializer();
-	debug_str(std::string("_ <- (MyList: standart) Constructor"));
+	_debug_str(std::string("_ <- (MyList: standart) Constructor"));
 }
 
 template <class TObjTemplate>
 MyList<TObjTemplate>::~MyList()
 {
-	debug_str(std::string("_ <- (MyList) Destructor start"));
-	clear_all();
-	debug_str(std::string("_ <- (MyList) Destructor end"));
+	_debug_str(std::string("_ <- (MyList) Destructor start"));
+	_clear_all();
+	_debug_str(std::string("_ <- (MyList) Destructor end"));
 }
 
 template <class TObjTemplate>
@@ -93,7 +91,7 @@ void MyList<TObjTemplate>::push_back(const TObjTemplate& val)
 		m_pTail = pAuxCurr;
 	}
 	++m_iCurrentSize;
-	debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Pushing back to");
+	_debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Pushing back to");
 }
 
 template <class TObjTemplate>
@@ -118,18 +116,18 @@ void MyList<TObjTemplate>::pop_back()
 	{
 		throw std::runtime_error("Undefined behavior in MyList pop_back() function");
 	}
-	debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Poping back to new size");
+	_debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Poping back to new size");
 }
 
 template <class TObjTemplate>
-void MyList<TObjTemplate>::initializer()
+void MyList<TObjTemplate>::_initializer()
 {
 	m_iCurrentSize = 0;
 	m_pHead = m_pTail = NULL;
 }
 
 template <class TObjTemplate>
-void MyList<TObjTemplate>::clear_all()
+void MyList<TObjTemplate>::_clear_all()
 {
 	Node* pAuxCurr;
 	while (m_pHead)
@@ -138,33 +136,33 @@ void MyList<TObjTemplate>::clear_all()
 		m_pHead = pAuxCurr->m_pNext;
 		delete pAuxCurr;
 	}
-	initializer();
+	_initializer();
 }
 
 template <class TObjTemplate>
 void MyList<TObjTemplate>::reveal() const
 {
-	debug_str(std::string("_ <- (MyList) Revealing start direct"));
+	_debug_str(std::string("_ <- (MyList) Revealing start direct"));
 	Node* pAuxCurr = m_pHead;
 	while (pAuxCurr)
 	{
 		pAuxCurr->m_storedData.sayname();
 		pAuxCurr = pAuxCurr->m_pNext;
 	}
-	debug_str(std::string("_ <- (MyList) Revealing start reverse"));
+	_debug_str(std::string("_ <- (MyList) Revealing start reverse"));
 	pAuxCurr = m_pTail;
 	while (pAuxCurr)
 	{
 		pAuxCurr->m_storedData.sayname();
 		pAuxCurr = pAuxCurr->m_pPrev;
 	}
-	debug_str(std::string("_ <- (MyList) Revealing completed"));
+	_debug_str(std::string("_ <- (MyList) Revealing completed"));
 }
 
 template <class TObjTemplate>
 void MyList<TObjTemplate>::clear()
 {
-	clear_all();
+	_clear_all();
 }
 
 template <class TObjTemplate>
@@ -184,19 +182,19 @@ void MyList<TObjTemplate>::reverse()
 	}
 	m_pTail = m_pHead;
 	m_pHead = pAuxPrev;
-	debug_str(std::string("_ <- (MyList) Reverse completed"));
+	_debug_str(std::string("_ <- (MyList) Reverse completed"));
 }
 
 #ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 template <class TObjTemplate>
-void MyList<TObjTemplate>::debug_str(const std::string sOutStr) const
+void MyList<TObjTemplate>::_debug_str(const std::string sOutStr) const
 {
 	std::cout << sOutStr << "\n";
 }
 #else
 inline
 template <class TObjTemplate>
-void MyList<TObjTemplate>::debug_str(const std::string sOutStr) const
+void MyList<TObjTemplate>::_debug_str(const std::string sOutStr) const
 {
 	// empty
 }

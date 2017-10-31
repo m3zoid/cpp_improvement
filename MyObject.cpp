@@ -3,18 +3,18 @@
 MyObject::MyObject()
 {
 	m_iName = 0;
-	debug_str(std::to_string(m_iName) + " <- (MyObject: standart) Constructor");
+	_debug_str(std::to_string(m_iName) + " <- (MyObject: standart) Constructor");
 }
 
 MyObject::MyObject(int iIndex)
 {
 	m_iName = iIndex;
-	debug_str(std::to_string(m_iName) + " <- (MyObject: by index) Constructor");
+	_debug_str(std::to_string(m_iName) + " <- (MyObject: by index) Constructor");
 }
 
 MyObject::~MyObject()
 {
-	debug_str(std::to_string(m_iName) + " <- (MyObject) Destructor");
+	_debug_str(std::to_string(m_iName) + " <- (MyObject) Destructor");
 }
 
 void MyObject::sayname()
@@ -23,13 +23,13 @@ void MyObject::sayname()
 }
 
 #ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-void MyObject::debug_str(const std::string sOutStr) const
+void MyObject::_debug_str(const std::string sOutStr) const
 {
 	std::cout << sOutStr << "\n";
 }
 #else
 inline
-void MyObject::debug_str(const std::string sOutStr) const
+void MyObject::_debug_str(const std::string sOutStr) const
 {
 	// empty
 }
