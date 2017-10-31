@@ -2,6 +2,7 @@
 #define __INCLUDEALL_H_CUSTOMONE_INCLUDED_
 
 #include <iostream>
+#include <memory>
 #include <assert.h>
 
 #include "LDbg.h"

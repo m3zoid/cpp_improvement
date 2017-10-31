@@ -73,8 +73,7 @@ std::size_t MyList<TObjTemplate>::size() const
 template <class TObjTemplate>
 void MyList<TObjTemplate>::push_back(const TObjTemplate& val)
 {
-	// std::unique< Node > pNode(new Node);
-	Node* pAuxCurr = new Node;
+	std::unique_ptr<Node> pAuxCurr(new Node);
 	pAuxCurr->m_pPrev = NULL;
 	pAuxCurr->m_pNext = NULL;
 	pAuxCurr->m_storedData = val;
@@ -82,13 +81,13 @@ void MyList<TObjTemplate>::push_back(const TObjTemplate& val)
 	if (m_iCurrentSize > 0)
 	{
 		pAuxCurr->m_pPrev = m_pTail;
-		m_pTail->m_pNext = pAuxCurr;
-		m_pTail = pAuxCurr;
+		m_pTail->m_pNext = pAuxCurr.release();
+		m_pTail = m_pTail->m_pNext;
 	}
 	else
 	{
-		m_pHead = pAuxCurr;
-		m_pTail = pAuxCurr;
+		m_pHead = pAuxCurr.release();
+		m_pTail = m_pHead;
 	}
 	++m_iCurrentSize;
 	_debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Pushing back to");
