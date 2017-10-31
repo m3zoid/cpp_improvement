@@ -2,28 +2,35 @@
 
 MyObject::MyObject()
 {
-	iind = 0;
-#ifdef __LDBG_H_INCLUDED_
-	std::cout << iind << " <- Construct (MyObject)(standart)\n";
-#endif
+	m_i_name = 0;
+	debug_str(std::to_string(m_i_name) + " <- (MyObject: standart) Constructor");
 }
 
 MyObject::MyObject(int index)
 {
-	iind = index;
-#ifdef __LDBG_H_INCLUDED_
-	std::cout << iind << " <- Construct (MyObject)(index_type)\n";
-#endif
+	m_i_name = index;
+	debug_str(std::to_string(m_i_name) + " <- (MyObject: by index) Constructor");
 }
 
 MyObject::~MyObject()
 {
-#ifdef __LDBG_H_INCLUDED_
-	std::cout << iind << " <- Destructor (MyObject)\n";
-#endif
+	debug_str(std::to_string(m_i_name) + " <- (MyObject) Destructor");
 }
 
-void MyObject::say()
+void MyObject::sayname()
 {
-	std::cout << iind << " <- MyObject saying name\n";
+	std::cout << m_i_name << " <- (MyObject) saying name\n";
 }
+
+#ifdef __LDBG_H_INCLUDED_
+void MyObject::debug_str(std::string outString)
+{
+	std::cout << outString << "\n";
+}
+#else
+inline
+void MyObject::debug_str(std::string outString)
+{
+	// empty
+}
+#endif

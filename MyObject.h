@@ -1,16 +1,21 @@
-#ifndef __MYOBJECT_H_INCLUDED_
-#define __MYOBJECT_H_INCLUDED_
+#ifndef __MYOBJECT_H_CUSTOMONE_INCLUDED_
+#define __MYOBJECT_H_CUSTOMONE_INCLUDED_
+
+#include "IncludeAll.h"
 
 class MyObject
 {
 public:
 	MyObject();
-	MyObject(int index);
+	MyObject(int);
 	~MyObject();
-	void say();
+	void sayname();
 
 private:
-	int iind;
+	void debug_str(std::string);
+
+private:
+	int m_i_name;
 };
 
-#endif // __MYOBJECT_H_INCLUDED_
+#endif // __MYOBJECT_H_CUSTOMONE_INCLUDED_

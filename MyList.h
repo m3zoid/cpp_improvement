@@ -170,7 +170,7 @@ void MyList<T>::reveal() const
 	Element* current = first;
 	while (current)
 	{
-		current->data.say();
+		current->data.sayname();
 		current = current->next;
 	}
 #ifdef __LDBG_H_INCLUDED_
@@ -179,7 +179,7 @@ void MyList<T>::reveal() const
 	current = last;
 	while (current)
 	{
-		current->data.say();
+		current->data.sayname();
 		current = current->previous;
 	}
 #ifdef __LDBG_H_INCLUDED_

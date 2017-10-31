@@ -24,7 +24,7 @@ void testMyObject()
 	std::cout << "<- Start testMyObject()" << std::endl;
 
 	MyObject my_object(10);
-	my_object.say();
+	my_object.sayname();
 
 	std::cout << "<- End testMyObject()\n";
 }
@@ -38,7 +38,7 @@ void testMyList()
 	std::cout << my_list_1.size() << " <- List size\n";
 
 	MyObject my_object(555);
-	my_object.say();
+	my_object.sayname();
 
 	std::cout << my_list_1.empty() << " <- Is empty\n";
 	std::cout << my_list_1.size() << " <- List size\n";
