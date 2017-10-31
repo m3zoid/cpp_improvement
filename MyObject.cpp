@@ -22,7 +22,7 @@ void MyObject::sayname()
 	std::cout << m_i_name << " <- (MyObject) saying name\n";
 }
 
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 void MyObject::debug_str(std::string outString)
 {
 	std::cout << outString << "\n";

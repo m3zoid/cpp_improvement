@@ -47,12 +47,12 @@ MyList<T>::MyList()
 	// , member2()
 {
 	initializer();
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << "MyList" << " <- Constructor\n";
 #endif
 }
 
-// #ifdef __LDBG_H_INCLUDED_
+// #ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 // debug(string)
 // {
 //  std::cout << string
@@ -67,11 +67,11 @@ MyList<T>::MyList()
 template <class T>
 MyList<T>::~MyList()
 {
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << "MyList" << " <- Start destructor\n";
 #endif
 	clear_all();
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << "MyList" << " <- Destroyed\n";
 #endif
 }
@@ -109,7 +109,7 @@ void MyList<T>::push_back(const T& val)
 		last = buffElem;
 	}
 	++sz;
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << sz << " <- MyList Pushing back to\n";
 #endif
 }
@@ -136,7 +136,7 @@ void MyList<T>::pop_back()
 	{
 		throw std::runtime_error("Undefined behavior with MyList pop_back()");
 	}
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << sz << " <- MyList Poping back to\n";
 #endif
 }
@@ -164,7 +164,7 @@ void MyList<T>::clear_all()
 template <class T>
 void MyList<T>::reveal() const
 {
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << "MyList" << " <- Revealing start direct\n";
 #endif
 	Element* current = first;
@@ -173,7 +173,7 @@ void MyList<T>::reveal() const
 		current->data.sayname();
 		current = current->next;
 	}
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << "MyList" << " <- Revealing start reverse\n";
 #endif
 	current = last;
@@ -182,7 +182,7 @@ void MyList<T>::reveal() const
 		current->data.sayname();
 		current = current->previous;
 	}
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << "MyList" << " <- Revealing completed\n";
 #endif
 }
@@ -210,7 +210,7 @@ void MyList<T>::reverse() noexcept
 	}
 	last = first;
 	first = aux_prev;
-#ifdef __LDBG_H_INCLUDED_
+#ifdef __LDBG_H_CUSTOMONE_INCLUDED_
 	std::cout << "MyList" << " <- Reverse completed\n";
 #endif
 }
