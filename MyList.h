@@ -23,6 +23,10 @@ public:
 	void reveal() const;
 
 private:
+	void initializer();
+	void clear_all();
+
+private:
 	struct Element
 	{
 		Element* previous;
@@ -30,22 +34,35 @@ private:
 		T data;
 	};
 
+private:
 	std::size_t sz;
 	Element* first;
 	Element* last;
-
-	void initializer();
-	void clear_all();
 };
 
 template <class T>
 MyList<T>::MyList()
+	// : inherited_class(arg1,arg2)
+	// , member1(0)
+	// , member2()
 {
 	initializer();
 #ifdef __LDBG_H_INCLUDED_
 	std::cout << "MyList" << " <- Constructor\n";
 #endif
 }
+
+// #ifdef __LDBG_H_INCLUDED_
+// debug(string)
+// {
+//  std::cout << string
+// }
+// #else
+// inline
+// debug(string)
+// {
+// }
+// #endif
 
 template <class T>
 MyList<T>::~MyList()
@@ -62,7 +79,7 @@ MyList<T>::~MyList()
 template <class T>
 bool MyList<T>::empty() const noexcept
 {
-	return (sz == 0) ? true : false;
+	return (sz == 0);
 }
 
 template <class T>
@@ -74,6 +91,7 @@ std::size_t MyList<T>::size() const noexcept
 template <class T>
 void MyList<T>::push_back(const T& val)
 {
+	// std::unique< Element > pElement(new Element);
 	Element* buffElem = new Element;
 	buffElem->previous = NULL;
 	buffElem->next = NULL;
