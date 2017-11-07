@@ -7,6 +7,7 @@
 
 #include "LDbg.h"
 #include "MyList.h"
+#include "MyMap.h"
 #include "MyObject.h"
 
 #endif // __INCLUDEALL_H_CUSTOMONE_INCLUDED_

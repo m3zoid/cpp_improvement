@@ -36,6 +36,28 @@ private:
     };
 
 private:
+    template<class _Tp, class _Ref, class _Ptr>
+    class iterator
+    {
+        Node* m_pIterCurrNd;
+
+        iterator(iterator* _in) : m_pIterCurrNd(_in) {}
+        iterator() {}
+
+        void _incr() { m_pIterCurrNd = m_pIterCurrNd->m_pNext; }
+        void _decr() { m_pIterCurrNd = m_pIterCurrNd->m_pPrev; }
+
+        bool operator==(const iterator& _in) const
+        {
+            return m_pIterCurrNd == _in.m_pIterCurrNd;
+        }
+        bool operator!=(const iterator& _in) const
+        {
+            return m_pIterCurrNd != _in.m_pIterCurrNd;
+        }
+    };
+
+private:
     std::size_t m_iCurrentSize;
     Node* m_pHead;
     Node* m_pTail;
