@@ -3,7 +3,7 @@
 
 #include "IncludeAll.h"
 
-template <class _TObjTemplate>
+template <class _TVal>
 class MyList
 {
 public:
@@ -13,7 +13,7 @@ public:
     bool empty() const;
     std::size_t size() const;
 
-    void push_back(const _TObjTemplate&);
+    void push_back(const _TVal&);
     void pop_back();
 
     void clear();
@@ -32,7 +32,7 @@ private:
     {
         Node* m_pPrev;
         Node* m_pNext;
-        _TObjTemplate m_storedData;
+        _TVal m_storedData;
     };
 
 private:
@@ -41,8 +41,8 @@ private:
     Node* m_pTail;
 };
 
-template <class _TObjTemplate>
-MyList<_TObjTemplate>::MyList()
+template <class _TVal>
+MyList<_TVal>::MyList()
     : m_iCurrentSize(0)
     , m_pHead(NULL)
     , m_pTail(NULL)
@@ -50,28 +50,28 @@ MyList<_TObjTemplate>::MyList()
     _debug_str(std::string("_ <- (MyList: standart) Constructor"));
 }
 
-template <class _TObjTemplate>
-MyList<_TObjTemplate>::~MyList()
+template <class _TVal>
+MyList<_TVal>::~MyList()
 {
     _debug_str(std::string("_ <- (MyList) Destructor start"));
     _clear_all();
     _debug_str(std::string("_ <- (MyList) Destructor end"));
 }
 
-template <class _TObjTemplate>
-bool MyList<_TObjTemplate>::empty() const
+template <class _TVal>
+bool MyList<_TVal>::empty() const
 {
     return (m_iCurrentSize == 0);
 }
 
-template <class _TObjTemplate>
-std::size_t MyList<_TObjTemplate>::size() const
+template <class _TVal>
+std::size_t MyList<_TVal>::size() const
 {
     return m_iCurrentSize;
 }
 
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::push_back(const _TObjTemplate& val)
+template <class _TVal>
+void MyList<_TVal>::push_back(const _TVal& val)
 {
     std::unique_ptr<Node> pAuxCurr(new Node);
     pAuxCurr->m_pPrev = NULL;
@@ -93,8 +93,8 @@ void MyList<_TObjTemplate>::push_back(const _TObjTemplate& val)
     _debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Pushing back to");
 }
 
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::pop_back()
+template <class _TVal>
+void MyList<_TVal>::pop_back()
 {
     if (m_pTail)
     {
@@ -118,15 +118,15 @@ void MyList<_TObjTemplate>::pop_back()
     _debug_str(std::to_string(m_iCurrentSize) + " <- (MyList) Poping back to new size");
 }
 
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::_initializer()
+template <class _TVal>
+void MyList<_TVal>::_initializer()
 {
     m_iCurrentSize = 0;
     m_pHead = m_pTail = NULL;
 }
 
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::_clear_all()
+template <class _TVal>
+void MyList<_TVal>::_clear_all()
 {
     Node* pAuxCurr;
     while (m_pHead)
@@ -138,8 +138,8 @@ void MyList<_TObjTemplate>::_clear_all()
     _initializer();
 }
 
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::reveal() const
+template <class _TVal>
+void MyList<_TVal>::reveal() const
 {
     _debug_str(std::string("_ <- (MyList) Revealing start direct"));
     Node* pAuxCurr = m_pHead;
@@ -158,14 +158,14 @@ void MyList<_TObjTemplate>::reveal() const
     _debug_str(std::string("_ <- (MyList) Revealing completed"));
 }
 
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::clear()
+template <class _TVal>
+void MyList<_TVal>::clear()
 {
     _clear_all();
 }
 
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::reverse()
+template <class _TVal>
+void MyList<_TVal>::reverse()
 {
     Node* pAuxCurr = m_pHead;
     Node* pAuxNext = NULL;
@@ -185,15 +185,15 @@ void MyList<_TObjTemplate>::reverse()
 }
 
 #ifdef __LDBG_H_CUSTOMONE_INCLUDED_
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::_debug_str(const std::string sOutStr) const
+template <class _TVal>
+void MyList<_TVal>::_debug_str(const std::string sOutStr) const
 {
     std::cout << sOutStr << "\n";
 }
 #else
 inline
-template <class _TObjTemplate>
-void MyList<_TObjTemplate>::_debug_str(const std::string sOutStr) const
+template <class _TVal>
+void MyList<_TVal>::_debug_str(const std::string sOutStr) const
 {
     // empty
 }
