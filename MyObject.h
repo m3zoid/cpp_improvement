@@ -6,16 +6,16 @@
 class MyObject
 {
 public:
-	MyObject();
-	MyObject(int);
-	~MyObject();
-	void sayname();
+    MyObject();
+    MyObject(int);
+    ~MyObject();
+    void sayname();
 
 private:
-	void _debug_str(const std::string) const;
+    void _debug_str(const std::string) const;
 
 private:
-	int m_iName;
+    int m_iName;
 };
 
 #endif // __MYOBJECT_H_CUSTOMONE_INCLUDED_
