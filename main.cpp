@@ -5,15 +5,18 @@ void testMyList();
 void testAll();
 void testInt();
 void testMyPair();
+void testMyMap();
 
 int main()
 {
     std::cout << "<- START_PROGRAM_FLOW" << std::endl;
 
-    testMyObject();
-    testMyList();
-    testAll();
+    // testMyObject();
+    // testMyList();
+    // testAll();
     // testInt();
+    // testMyPair();
+    testMyMap();
 
     std::cout << "<- END_PROGRAM_FLOW\n";
 
@@ -96,4 +99,9 @@ void testInt()
 void testMyPair()
 {
     MyPair<int, MyObject> my_pair;
+}
+
+void testMyMap()
+{
+    MyMap<int, MyObject, double> my_map;
 }

@@ -1,6 +1,8 @@
 #ifndef __MYPAIR_HPP_CUSTOMONE_INCLUDED_
 #define __MYPAIR_HPP_CUSTOMONE_INCLUDED_
 
+#include "IncludeAll.h"
+
 template <class _TVal1, class _TVal2>
 struct MyPair {
     _TVal1 first;
