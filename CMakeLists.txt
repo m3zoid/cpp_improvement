@@ -9,7 +9,6 @@ set(CMAKE_AUTOMOC ON)
 # Create a list with all .cpp source files
 set( project_sources
    main.cpp
-   MyList.cpp
    MyObject.cpp
 )
 
