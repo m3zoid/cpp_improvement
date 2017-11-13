@@ -4,6 +4,7 @@ void testMyObject();
 void testMyList();
 void testAll();
 void testInt();
+void testMyPair();
 
 int main()
 {
@@ -90,4 +91,9 @@ void testInt()
     }
 
     std::cout << "<- End testInt()\n";
+}
+
+void testMyPair()
+{
+    MyPair<int, MyObject> my_pair;
 }

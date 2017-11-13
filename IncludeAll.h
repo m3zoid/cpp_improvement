@@ -6,6 +6,7 @@
 #include <assert.h>
 
 #include "LDbg.h"
+#include "MyPair.h"
 #include "MyList.h"
 #include "MyMap.h"
 #include "MyObject.h"
