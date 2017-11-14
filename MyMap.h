@@ -3,7 +3,7 @@
 
 #include "IncludeAll.h"
 
-template <class _TKey, class _TVal, class _TCompare>
+template <class _TKey, class _TVal, class _TCompare = my_less<_TKey> >
 class MyMap
 {
 public:
@@ -15,18 +15,19 @@ public:
 
     void clear();
 
-    // void reveal() const;
+    void reveal() const;
 
 private:
     struct Node
     {
         Node* m_pLeft;
         Node* m_pRight;
-        MyPair<_TKey, _TVal>* m_storedPair;
+        MyPair<_TKey, _TVal> m_storedPair;
     };
 
 private:
     void _initializer();
+    void _reveal_node(Node*) const;
     void _node_cleaner(Node*);
     void _clear_all();
     void _debug_str(const std::string) const;
@@ -52,17 +53,17 @@ MyMap<_TKey, _TVal, _TCompare>::~MyMap()
     _debug_str(std::string("_ <- (MyMap) Destructor end"));
 }
 
-// template <class _TKey, class _TVal, class _TCompare>
-// bool MyMap<_TKey, _TVal, _TCompare>::empty() const
-// {
-//  return (m_iCurrentSize == 0);
-// }
+template <class _TKey, class _TVal, class _TCompare>
+bool MyMap<_TKey, _TVal, _TCompare>::empty() const
+{
+    return (m_iCurrentSize == 0);
+}
 
-// template <class _TKey, class _TVal, class _TCompare>
-// std::size_t MyMap<_TKey, _TVal, _TCompare>::size() const
-// {
-//  return m_iCurrentSize;
-// }
+template <class _TKey, class _TVal, class _TCompare>
+std::size_t MyMap<_TKey, _TVal, _TCompare>::size() const
+{
+    return m_iCurrentSize;
+}
 
 template <class _TKey, class _TVal, class _TCompare>
 void MyMap<_TKey, _TVal, _TCompare>::_initializer()
@@ -79,7 +80,7 @@ void MyMap<_TKey, _TVal, _TCompare>::_node_cleaner(Node* _pNd)
     _node_cleaner(_pNd->m_pLeft);
     _node_cleaner(_pNd->m_pRight);
 
-    delete _pNd->m_storedPair;
+    delete _pNd;
 }
 
 template <class _TKey, class _TVal, class _TCompare>
@@ -89,25 +90,24 @@ void MyMap<_TKey, _TVal, _TCompare>::_clear_all()
     _initializer();
 }
 
-// template <class _TKey, class _TVal, class _TCompare>
-// void MyMap<_TKey, _TVal, _TCompare>::reveal() const
-// {
-//  _debug_str(std::string("_ <- (MyMap) Revealing start direct"));
-//  Node* pAuxCurr = m_pHead;
-//  while (pAuxCurr)
-//  {
-//      pAuxCurr->m_storedData.sayname();
-//      pAuxCurr = pAuxCurr->m_pNext;
-//  }
-//  _debug_str(std::string("_ <- (MyMap) Revealing start reverse"));
-//  pAuxCurr = m_pTail;
-//  while (pAuxCurr)
-//  {
-//      pAuxCurr->m_storedData.sayname();
-//      pAuxCurr = pAuxCurr->m_pPrev;
-//  }
-//  _debug_str(std::string("_ <- (MyMap) Revealing completed"));
-// }
+template <class _TKey, class _TVal, class _TCompare>
+void MyMap<_TKey, _TVal, _TCompare>::_reveal_node(Node* _pNd) const
+{
+    if (_pNd == NULL) return;
+
+    _reveal_node(_pNd->m_pLeft);
+    _reveal_node(_pNd->m_pRight);
+
+    _pNd->m_storedPair.second.sayname();
+}
+
+template <class _TKey, class _TVal, class _TCompare>
+void MyMap<_TKey, _TVal, _TCompare>::reveal() const
+{
+    _debug_str(std::string("_ <- (MyMap) Revealing start"));
+    _reveal_node(m_pRoot);
+    _debug_str(std::string("_ <- (MyMap) Revealing completed"));
+}
 
 template <class _TKey, class _TVal, class _TCompare>
 void MyMap<_TKey, _TVal, _TCompare>::clear()

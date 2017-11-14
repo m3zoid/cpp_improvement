@@ -103,5 +103,6 @@ void testMyPair()
 
 void testMyMap()
 {
-    MyMap<int, MyObject, double> my_map;
+    MyMap<int, MyObject> my_map;
+    my_map.reveal();
 }
