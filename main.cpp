@@ -103,6 +103,12 @@ void testMyPair()
 
 void testMyMap()
 {
-    MyMap<int, MyObject> my_map;
-    my_map.reveal();
+    // MyMap<int, MyObject> my_map;
+    // MyObject my_object(5);
+    // MyPair<int, MyObject> my_pair(5, my_object);
+    // my_map.insert(my_pair);
+    // my_map.reveal();
+
+    MyMap<int, char> my_map;
+    my_map.insert(MyPair<int, char>(1, 'c'));
 }

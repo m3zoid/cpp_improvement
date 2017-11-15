@@ -6,17 +6,6 @@
 template <class _TKey, class _TVal, class _TCompare = my_less<_TKey> >
 class MyMap
 {
-public:
-    MyMap();
-    ~MyMap();
-
-    bool empty() const;
-    std::size_t size() const;
-
-    void clear();
-
-    void reveal() const;
-
 private:
     struct Node
     {
@@ -24,6 +13,20 @@ private:
         Node* m_pRight;
         MyPair<_TKey, _TVal> m_storedPair;
     };
+
+public:
+    MyMap();
+    ~MyMap();
+
+    bool empty() const;
+    std::size_t size() const;
+
+    MyPair<bool, bool> insert (const MyPair<const _TKey, _TVal>&);
+    // MyPair<bool, bool> insert (MyPair<_TKey, _TVal>);
+
+    void clear();
+
+    void reveal() const;
 
 private:
     void _initializer();
@@ -63,6 +66,22 @@ template <class _TKey, class _TVal, class _TCompare>
 std::size_t MyMap<_TKey, _TVal, _TCompare>::size() const
 {
     return m_iCurrentSize;
+}
+
+template <class _TKey, class _TVal, class _TCompare>
+MyPair<bool, bool> MyMap<_TKey, _TVal, _TCompare>::insert (const MyPair<const _TKey, _TVal>& _val)
+// MyPair<bool, bool> MyMap<_TKey, _TVal, _TCompare>::insert (MyPair<_TKey, _TVal> _val)
+{
+    // Node* pAuxCurr = m_pRoot;
+    // while (pAuxCurr != NULL)
+    // {
+    //     bool is_less = _TCompare(pAuxCurr.m_storedPair, _val.m_storedPair);
+    //     if (is_less)
+    //         pAuxCurr = pAuxCurr.m_pLeft;
+    //     else
+    //         pAuxCurr = pAuxCurr.m_pRight;
+    // }
+    return MyPair<bool, bool> (true, true);
 }
 
 template <class _TKey, class _TVal, class _TCompare>
